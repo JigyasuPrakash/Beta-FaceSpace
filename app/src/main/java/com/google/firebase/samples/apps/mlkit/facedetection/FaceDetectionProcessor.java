@@ -73,7 +73,7 @@ public class FaceDetectionProcessor extends VisionProcessorBase<List<FirebaseVis
       FaceGraphic faceGraphic = new FaceGraphic(graphicOverlay);
       graphicOverlay.add(faceGraphic);
 
-
+      //idhar screen off karne ki method dalni hai
 
       faceGraphic.updateFace(face, frameMetadata.getCameraFacing());
     }
