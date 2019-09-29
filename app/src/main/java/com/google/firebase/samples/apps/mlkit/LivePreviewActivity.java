@@ -22,7 +22,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import com.google.android.gms.common.annotation.KeepName;
-import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.samples.apps.mlkit.facedetection.FaceDetectionProcessor;
 
 import java.io.IOException;

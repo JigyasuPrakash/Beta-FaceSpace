@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.google.firebase.samples.apps.mlkit;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -32,6 +34,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.samples.apps.mlkit.facedetection.MyAdmin;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +47,7 @@ public final class ChooserActivity extends AppCompatActivity
     implements OnRequestPermissionsResultCallback, AdapterView.OnItemClickListener {
   private static final String TAG = "ChooserActivity";
   private static final int PERMISSION_REQUESTS = 1;
+  public static final int RESULT_ENABLE = 11;
   public Button startButton;
 
   private static final Class<?>[] CLASSES =
@@ -67,7 +72,12 @@ public final class ChooserActivity extends AppCompatActivity
     startButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+          ComponentName compName = new ComponentName(getApplicationContext(), MyAdmin.class);
             Class<?> clicked = CLASSES[0];
+          Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+          intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName);
+          intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Additional text explaining why we need this permission");
+          startActivityForResult(intent, RESULT_ENABLE);
             startActivity(new Intent( getApplicationContext(), clicked));
         }
     });
