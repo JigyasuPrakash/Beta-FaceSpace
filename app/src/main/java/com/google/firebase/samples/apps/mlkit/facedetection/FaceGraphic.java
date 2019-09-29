@@ -23,6 +23,7 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.samples.apps.mlkit.GraphicOverlay;
 import com.google.firebase.samples.apps.mlkit.GraphicOverlay.Graphic;
+import com.google.firebase.samples.apps.mlkit.MyScreenClose;
 
 /**
  * Graphic instance for rendering face position, orientation, and landmarks within an associated
@@ -77,7 +78,7 @@ public class FaceGraphic extends Graphic {
     postInvalidate();
 
     if(facesSize > 1){
-      Intent i = new Intent(getApplicationContext(),MyScreenClose.class);
+      Intent i = new Intent(getApplicationContext(), MyScreenClose.class);
       getApplicationContext().startActivity(i);
     }
   }

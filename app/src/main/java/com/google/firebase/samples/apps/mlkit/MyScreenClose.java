@@ -1,4 +1,4 @@
-package com.google.firebase.samples.apps.mlkit.facedetection;
+package com.google.firebase.samples.apps.mlkit;
 
 import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-class MyScreenClose extends AppCompatActivity{
+public class MyScreenClose extends AppCompatActivity {
 
     public static final int RESULT_ENABLE = 11;
     private DevicePolicyManager devicePolicyManager;

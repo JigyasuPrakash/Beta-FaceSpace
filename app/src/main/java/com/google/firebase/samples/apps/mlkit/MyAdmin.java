@@ -1,4 +1,4 @@
-package com.google.firebase.samples.apps.mlkit.facedetection;
+package com.google.firebase.samples.apps.mlkit;
 
 import android.app.admin.DeviceAdminReceiver;
 import android.content.Context;

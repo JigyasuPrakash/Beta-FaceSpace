@@ -59,7 +59,7 @@ public final class LivePreviewActivity extends AppCompatActivity {
 
     if (allPermissionsGranted()) {
       createCameraSource(selectedModel);
-      cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
+      cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
     } else {
       getRuntimePermissions();
     }
