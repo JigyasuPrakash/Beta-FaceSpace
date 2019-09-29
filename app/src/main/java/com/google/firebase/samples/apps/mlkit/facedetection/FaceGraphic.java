@@ -14,6 +14,7 @@
 
 package com.google.firebase.samples.apps.mlkit.facedetection;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -70,10 +71,15 @@ public class FaceGraphic extends Graphic {
    * Updates the face instance from the detection of the most recent frame. Invalidates the relevant
    * portions of the overlay to trigger a redraw.
    */
-  public void updateFace(FirebaseVisionFace face, int facing) {
+  public void updateFace(FirebaseVisionFace face, int facing, int facesSize) {
     firebaseVisionFace = face;
     this.facing = facing;
     postInvalidate();
+
+    if(facesSize > 1){
+      Intent i = new Intent(getApplicationContext(),MyScreenClose.class);
+      getApplicationContext().startActivity(i);
+    }
   }
 
   /** Draws the face annotations for position on the supplied canvas. */

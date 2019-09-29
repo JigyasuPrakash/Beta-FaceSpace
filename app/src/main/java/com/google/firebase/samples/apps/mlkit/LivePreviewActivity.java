@@ -60,7 +60,7 @@ public final class LivePreviewActivity extends AppCompatActivity {
 
     if (allPermissionsGranted()) {
       createCameraSource(selectedModel);
-      cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
+      cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
     } else {
       getRuntimePermissions();
     }
@@ -118,8 +118,7 @@ public final class LivePreviewActivity extends AppCompatActivity {
   private String[] getRequiredPermissions() {
     try {
       PackageInfo info =
-          this.getPackageManager()
-              .getPackageInfo(this.getPackageName(), PackageManager.GET_PERMISSIONS);
+          this.getPackageManager().getPackageInfo(this.getPackageName(), PackageManager.GET_PERMISSIONS);
       String[] ps = info.requestedPermissions;
       if (ps != null && ps.length > 0) {
         return ps;
