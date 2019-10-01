@@ -23,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.google.firebase.samples.apps.mlkit.MyScreenClose"/>
         <receiver android:name="com.google.firebase.samples.apps.mlkit.MyAdmin"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data android:name="android.app.device_admin"

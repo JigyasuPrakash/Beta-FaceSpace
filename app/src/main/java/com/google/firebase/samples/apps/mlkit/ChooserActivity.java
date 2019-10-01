@@ -33,14 +33,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Demo app chooser which takes care of runtime permission requesting and allows you to pick from
- * all available testing Activities.
- */
 public final class ChooserActivity extends AppCompatActivity
     implements ActivityCompat.OnRequestPermissionsResultCallback, AdapterView.OnItemClickListener, View.OnClickListener {
 
@@ -56,11 +51,6 @@ public final class ChooserActivity extends AppCompatActivity
         LivePreviewActivity.class//, StillImageActivity.class,
       };
 
-  private static final int[] DESCRIPTION_IDS =
-      new int[] {
-        R.string.desc_camera_source_activity, R.string.desc_still_image_activity,
-      };
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -68,8 +58,7 @@ public final class ChooserActivity extends AppCompatActivity
 
     setContentView(R.layout.activity_chooser);
 
-    startButton = (Button) findViewById(R.id.start);
-
+    startButton = findViewById(R.id.start);
     startButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

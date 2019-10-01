@@ -1,29 +1,13 @@
-// Copyright 2018 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package com.google.firebase.samples.apps.mlkit.facedetection;
 
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import com.google.android.gms.vision.CameraSource;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.samples.apps.mlkit.GraphicOverlay;
 import com.google.firebase.samples.apps.mlkit.GraphicOverlay.Graphic;
-import com.google.firebase.samples.apps.mlkit.MyScreenClose;
+import com.google.firebase.samples.apps.mlkit.LivePreviewActivity;
 
 /**
  * Graphic instance for rendering face position, orientation, and landmarks within an associated
@@ -37,7 +21,7 @@ public class FaceGraphic extends Graphic {
   private static final float BOX_STROKE_WIDTH = 5.0f;
 
   private static final int[] COLOR_CHOICES = {
-    Color.BLUE //, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.RED, Color.WHITE, Color.YELLOW
+    Color.WHITE //, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.RED, Color.WHITE, Color.YELLOW
   };
   private static int currentColorIndex = 0;
 
@@ -76,10 +60,8 @@ public class FaceGraphic extends Graphic {
     firebaseVisionFace = face;
     this.facing = facing;
     postInvalidate();
-
-    if(facesSize > 1){
-      Intent i = new Intent(getApplicationContext(), MyScreenClose.class);
-      getApplicationContext().startActivity(i);
+    if(facesSize > 1) {
+      LivePreviewActivity.letsee();
     }
   }
 
@@ -96,34 +78,6 @@ public class FaceGraphic extends Graphic {
     float y = translateY(face.getBoundingBox().centerY());
     canvas.drawCircle(x, y, FACE_POSITION_RADIUS, facePositionPaint);
     canvas.drawText("id: " + face.getTrackingId(), x + ID_X_OFFSET, y + ID_Y_OFFSET, idPaint);
-    canvas.drawText(
-        "happiness: " + String.format("%.2f", face.getSmilingProbability()),
-        x + ID_X_OFFSET * 3,
-        y - ID_Y_OFFSET,
-        idPaint);
-    if (facing == CameraSource.CAMERA_FACING_FRONT) {
-      canvas.drawText(
-          "right eye: " + String.format("%.2f", face.getRightEyeOpenProbability()),
-          x - ID_X_OFFSET,
-          y,
-          idPaint);
-      canvas.drawText(
-          "left eye: " + String.format("%.2f", face.getLeftEyeOpenProbability()),
-          x + ID_X_OFFSET * 6,
-          y,
-          idPaint);
-    } else {
-      canvas.drawText(
-          "left eye: " + String.format("%.2f", face.getLeftEyeOpenProbability()),
-          x - ID_X_OFFSET,
-          y,
-          idPaint);
-      canvas.drawText(
-          "right eye: " + String.format("%.2f", face.getRightEyeOpenProbability()),
-          x + ID_X_OFFSET * 6,
-          y,
-          idPaint);
-    }
 
     // Draws a bounding box around the face.
     float xOffset = scaleX(face.getBoundingBox().width() / 2.0f);

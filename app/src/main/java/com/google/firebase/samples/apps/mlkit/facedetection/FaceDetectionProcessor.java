@@ -28,7 +28,6 @@ public class FaceDetectionProcessor extends VisionProcessorBase<List<FirebaseVis
             .setClassificationType(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
             .setTrackingEnabled(true)
             .build();
-
     detector = FirebaseVision.getInstance().getVisionFaceDetector(options);
   }
 
@@ -56,7 +55,7 @@ public class FaceDetectionProcessor extends VisionProcessorBase<List<FirebaseVis
       FirebaseVisionFace face = faces.get(i);
       FaceGraphic faceGraphic = new FaceGraphic(graphicOverlay);
       graphicOverlay.add(faceGraphic);
-      faceGraphic.updateFace(face, frameMetadata.getCameraFacing(), faces.size());
+      faceGraphic.updateFace(face, frameMetadata.getCameraFacing(),faces.size());
     }
   }
 

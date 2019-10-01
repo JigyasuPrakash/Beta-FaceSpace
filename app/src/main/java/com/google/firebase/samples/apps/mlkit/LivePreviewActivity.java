@@ -13,7 +13,10 @@
 // limitations under the License.
 package com.google.firebase.samples.apps.mlkit;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -21,6 +24,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.firebase.samples.apps.mlkit.facedetection.FaceDetectionProcessor;
 
@@ -31,7 +36,7 @@ import java.util.List;
 /** Demo app showing the various features of ML Kit for Firebase. This class is used to
  * set up continuous frame processing on frames from a camera source. */
 @KeepName
-public final class LivePreviewActivity extends AppCompatActivity {
+public final class LivePreviewActivity extends AppCompatActivity{
   private static final String FACE_DETECTION = "Face Detection";
   private static final String TAG = "LivePreviewActivity";
   private static final int PERMISSION_REQUESTS = 1;
@@ -40,6 +45,10 @@ public final class LivePreviewActivity extends AppCompatActivity {
   private CameraSourcePreview preview;
   private GraphicOverlay graphicOverlay;
   private String selectedModel = FACE_DETECTION;
+  public static final int RESULT_ENABLE = 11;
+  private ComponentName compName;
+  public static boolean active;
+  public static DevicePolicyManager devicePolicyManager;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +67,22 @@ public final class LivePreviewActivity extends AppCompatActivity {
     }
 
     if (allPermissionsGranted()) {
-      createCameraSource(selectedModel);
-      cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
+      createCameraSource();
+      cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
     } else {
       getRuntimePermissions();
     }
+      Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+      intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName);
+      intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "This app need Admin Permission to lock screen");
+      startActivityForResult(intent, RESULT_ENABLE);
+
+      devicePolicyManager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
+      compName = new ComponentName(getApplicationContext(), MyAdmin.class);
+      active = devicePolicyManager.isAdminActive(compName);
   }
 
-  private void createCameraSource(String model) {
+  private void createCameraSource() {
     // If there's no existing cameraSource, create one.
     if (cameraSource == null) {
       cameraSource = new CameraSource(this, graphicOverlay);
@@ -89,6 +106,14 @@ public final class LivePreviewActivity extends AppCompatActivity {
         cameraSource.release();
         cameraSource = null;
       }
+    }
+  }
+
+  public static void letsee(){
+    if(active){
+      devicePolicyManager.lockNow();
+    }else{
+      Log.e(TAG,"Device Admin Permissions not found");
     }
   }
 
@@ -157,7 +182,7 @@ public final class LivePreviewActivity extends AppCompatActivity {
           int requestCode, String[] permissions, int[] grantResults) {
     Log.i(TAG, "Permission granted!");
     if (allPermissionsGranted()) {
-      createCameraSource(selectedModel);
+      createCameraSource();
     }
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
   }
