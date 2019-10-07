@@ -24,11 +24,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.firebase.samples.apps.mlkit.facedetection.FaceDetectionProcessor;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +34,12 @@ import java.util.List;
  * set up continuous frame processing on frames from a camera source. */
 @KeepName
 public final class LivePreviewActivity extends AppCompatActivity{
-  private static final String FACE_DETECTION = "Face Detection";
   private static final String TAG = "LivePreviewActivity";
   private static final int PERMISSION_REQUESTS = 1;
 
   private CameraSource cameraSource = null;
   private CameraSourcePreview preview;
   private GraphicOverlay graphicOverlay;
-  private String selectedModel = FACE_DETECTION;
   public static final int RESULT_ENABLE = 11;
   private ComponentName compName;
   public static boolean active;
