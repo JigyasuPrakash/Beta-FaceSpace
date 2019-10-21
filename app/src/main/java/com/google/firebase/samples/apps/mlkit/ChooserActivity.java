@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ChooserActivity extends AppCompatActivity
-    implements ActivityCompat.OnRequestPermissionsResultCallback, AdapterView.OnItemClickListener, View.OnClickListener {
+    implements ActivityCompat.OnRequestPermissionsResultCallback, View.OnClickListener {
 
     private static final String TAG = "ChooserActivity";
     private ComponentName compName;
@@ -32,12 +32,6 @@ public final class ChooserActivity extends AppCompatActivity
     public static final int RESULT_ENABLE = 11;
     public Button startButton;
     public Button b;
-
-  private static final Class<?>[] CLASSES =
-      new Class<?>[] {
-        LivePreviewActivity.class//, StillImageActivity.class,
-      };
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,8 +43,7 @@ public final class ChooserActivity extends AppCompatActivity
     startButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Class<?> clicked = CLASSES[0];
-            startActivity(new Intent( getApplicationContext(), clicked));
+            startActivity(new Intent( getApplicationContext(), LivePreviewActivity.class));
         }
     });
 
@@ -87,11 +80,6 @@ public final class ChooserActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-  @Override
-  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    Class<?> clicked = CLASSES[position];
-    startActivity(new Intent(this, clicked));
-  }
 
   private String[] getRequiredPermissions() {
     try {
