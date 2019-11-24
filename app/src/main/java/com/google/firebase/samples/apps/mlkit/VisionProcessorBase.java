@@ -13,8 +13,6 @@
 // limitations under the License.
 package com.google.firebase.samples.apps.mlkit;
 
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,35 +55,6 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
 
         detectInVisionImage(
                 FirebaseVisionImage.fromByteBuffer(data, metadata), frameMetadata, graphicOverlay);
-    }
-
-    // Bitmap version
-    @Override
-    public void process(Bitmap bitmap, final GraphicOverlay
-            graphicOverlay) {
-        if (shouldThrottle.get()) {
-            return;
-        }
-        detectInVisionImage(FirebaseVisionImage.fromBitmap(bitmap), null, graphicOverlay);
-    }
-
-    /**
-     * Detects feature from given media.Image
-     *
-     * @return created FirebaseVisionImage
-     */
-    @Override
-    public void process(Image image, int rotation, final GraphicOverlay graphicOverlay) {
-        if (shouldThrottle.get()) {
-            return;
-        }
-        // This is for overlay display's usage
-        FrameMetadata frameMetadata =
-                new FrameMetadata.Builder().setWidth(image.getWidth()).setHeight(image.getHeight
-                        ()).build();
-        FirebaseVisionImage fbVisionImage =
-                FirebaseVisionImage.fromMediaImage(image, rotation);
-        detectInVisionImage(fbVisionImage, frameMetadata, graphicOverlay);
     }
 
     private void detectInVisionImage(
